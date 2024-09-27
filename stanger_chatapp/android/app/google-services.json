@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "658168889458",
+    "project_id": "chat-bfddc",
+    "storage_bucket": "chat-bfddc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:658168889458:android:dbae37443257d5b41082eb",
+        "android_client_info": {
+          "package_name": "com.example.stanger_chatapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXqUY8Dw44wzNpqijsSQmlea7tklwq0yY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
