@@ -1,10 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:organic_food_app/Controller/Auth_controller.dart';
-import 'package:organic_food_app/Theme/strings.dart';
-import 'package:organic_food_app/widgets/login/Buttion.dart';
-import 'package:organic_food_app/widgets/login/Customtextfield.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class LoginPage extends StatefulWidget {
@@ -14,28 +10,18 @@ class LoginPage extends StatefulWidget {
   State<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _animationController;
-  late Animation<double> _animation;
+class _LoginPageState extends State<LoginPage> {
+  // Removed AnimationController and Animation variables
 
   @override
   void initState() {
     super.initState();
-    // Initialize animation controller for subtle fade-in effect
-    _animationController = AnimationController(
-      duration: const Duration(milliseconds: 800),
-      vsync: this,
-    );
-    _animation =
-        CurvedAnimation(parent: _animationController, curve: Curves.easeIn);
-
-    _animationController.forward(); // Start the animation
+    // Removed AnimationController initialization
   }
 
   @override
   void dispose() {
-    _animationController.dispose();
+    // Removed AnimationController disposal
     super.dispose();
   }
 
@@ -46,162 +32,124 @@ class _LoginPageState extends State<LoginPage>
     return Scaffold(
       body: Stack(
         children: [
-          // Gradient Background
+          // Background gradient
           Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
-                colors: [Color(0xFFa8e063), Color(0xFF56ab2f)],
+                colors: [Color(0xFF43C6AC), Color(0xFF191654)],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
             ),
           ),
           // Semi-transparent overlay
-          Container(
-            color: Colors.black.withOpacity(0.3),
-          ),
-          // Animated Login Form
-          FadeTransition(
-            opacity: _animation,
-            child: Center(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // App Logo
-                    Image.asset(
-                      'assets/Green.png',
-                      height: 100,
-                      fit: BoxFit.contain,
+          Container(color: Colors.black.withOpacity(0.3)),
+          // Centered login form without animation
+          Center(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // App logo
+                  const CircleAvatar(
+                    radius: 50,
+                    backgroundImage: AssetImage("assets/Green.png"),
+                  ),
+                  const SizedBox(height: 20),
+                  // Login card
+                  Container(
+                    padding: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.9),
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: [
+                        BoxShadow(blurRadius: 10, color: Colors.black26)
+                      ],
                     ),
-                    const SizedBox(height: 20),
-                    // Login Container with Rounded Corners and Shadow
-                    Container(
-                      padding: const EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.9),
-                        borderRadius: BorderRadius.circular(16),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
-                            blurRadius: 20,
-                            offset: const Offset(0, 10),
+                    child: Column(
+                      children: [
+                        // Email input
+                        TextFormField(
+                          decoration: const InputDecoration(
+                            labelText: "Email",
+                            prefixIcon: Icon(Icons.email),
                           ),
-                        ],
-                      ),
-                      child: Column(
-                        children: [
-                          // Email Field
-                          MyTextField(
-                            label: "Email",
-                            onChanged: (value) {
-                              // Handle email change if needed
-                            },
-                            licon: Icons.email,
-                            controller: authController.email,
-                          ),
-                          const SizedBox(height: 20),
-                          // Password Field with Visibility Toggle
-                          Obx(() => MyTextField(
-                                label: "Password",
-                                obscureText: authController.isSecure.value,
-                                onChanged: (value) {
-                                  // Handle password change if needed
-                                },
-                                licon: authController.isSecure.value
-                                    ? Icons.lock
-                                    : Icons.lock,
-                                controller: authController.password,
+                          onChanged: (value) =>
+                              authController.email.value = value,
+                        ),
+                        const SizedBox(height: 20),
+                        // Password input
+                        Obx(() => TextFormField(
+                              decoration: InputDecoration(
+                                labelText: "Password",
+                                prefixIcon: const Icon(Icons.lock),
                                 suffixIcon: IconButton(
                                   icon: Icon(
                                     authController.isSecure.value
                                         ? Icons.visibility
                                         : Icons.visibility_off,
-                                    color: Colors.grey,
                                   ),
-                                  onPressed: () {},
-                                ),
-                              )),
-                          const SizedBox(height: 30),
-                          // Login Button
-                          SizedBox(
-                            width: double.infinity,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                authController.login();
-                              },
-                              style: ElevatedButton.styleFrom(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 16),
-                                backgroundColor: const Color(0xFF56ab2f),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30),
-                                ), // Green color
-                                elevation: 5,
-                              ),
-                              child: const Text(
-                                "Login",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
+                                  onPressed: () {
+                                    authController.isSecure.value =
+                                        !authController.isSecure.value;
+                                  },
                                 ),
                               ),
-                            ),
-                          ),
-                          const SizedBox(height: 20),
-                          // Sign Up Button
-                          TextButton(
+                              obscureText: authController.isSecure.value,
+                              onChanged: (value) =>
+                                  authController.password.value = value,
+                            )),
+                        const SizedBox(height: 30),
+                        // Login button
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
                             onPressed: () {
-                              // Navigate to Sign Up Screen
+                              authController.login(authController.email.value,
+                                  authController.password.value);
                             },
-                            child: Text(
-                              logintext.usersignup,
-                              style: const TextStyle(
-                                color: Color(0xFF56ab2f),
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(vertical: 16),
+                              backgroundColor: const Color(0xFF43C6AC),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              elevation: 5,
+                            ),
+                            child: const Text(
+                              "Login",
+                              style: TextStyle(
+                                color: Colors.white,
                                 fontSize: 16,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
-                          const SizedBox(height: 20),
-                          // OR Divider
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Divider(
-                                  color: Colors.grey.withOpacity(0.7),
-                                  thickness: 1,
-                                ),
-                              ),
-                              const Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 10),
-                                child: Text(
-                                  "OR",
-                                  style: TextStyle(color: Colors.grey),
-                                ),
-                              ),
-                              Expanded(
-                                child: Divider(
-                                  color: Colors.grey.withOpacity(0.7),
-                                  thickness: 1,
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 20),
-                          // Google Sign-In Button
-                          GoogleSignButton(
-                            title: "Sign in with Google",
+                        ),
+                        const SizedBox(height: 20),
+                        // Google sign-in
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton.icon(
                             onPressed: () {
-                              // Implement Google Sign-In
+                              authController.googleLogin();
                             },
+                            icon: const Icon(Icons.login),
+                            label: const Text("Sign in with Google"),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.redAccent,
+                              padding: const EdgeInsets.symmetric(vertical: 14),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                            ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),

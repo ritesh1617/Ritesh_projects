@@ -50,25 +50,28 @@ class GoogleSignButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton.icon(
-      onPressed: onPressed,
-      icon: Image.asset(
-        'assets/images/google_icon.png', // Ensure this asset exists
-        height: 24,
-        width: 24,
-      ),
-      label: Text(
-        title,
-        style: const TextStyle(color: Colors.black),
-      ),
-      style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.white,
-        side: BorderSide(color: Colors.grey.withOpacity(0.5)),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30),
+    return Container(
+      width: 500,
+      child: ElevatedButton.icon(
+        onPressed: onPressed,
+        icon: Image.asset(
+          'assets/icon/google_logo.png', // Ensure this asset exists
+          height: 30,
+          width: 30,
         ),
-        padding: const EdgeInsets.symmetric(vertical: 12),
-        elevation: 2,
+        label: Text(
+          title,
+          style: const TextStyle(color: Colors.black),
+        ),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.white,
+          side: BorderSide(color: Colors.grey.withOpacity(0.5)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          padding: const EdgeInsets.symmetric(vertical: 12),
+          elevation: 2,
+        ),
       ),
     );
   }
